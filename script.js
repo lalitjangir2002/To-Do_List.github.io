@@ -1,4 +1,3 @@
-// Implemented IIFE Module Pattern
 var app = (function () {
     let taskList = document.getElementById("list");
     let inputBar = document.getElementById("add");
@@ -8,7 +7,6 @@ var app = (function () {
     // For Giving Notifications
     function giveMessage(message, task = null) {
     let ele = document.getElementById("alert");
-      //&times used to create the x btn
     if (task !== null)
         ele.innerHTML += `<div> <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
     "${task.title}"  ${message} </div>`;
@@ -16,20 +14,7 @@ var app = (function () {
         ele.innerHTML += `<div> <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
     ${message} </div>`;
     }
-    //Fetching the dummy list - Promise using Aysnc Await Syntax
-    async function fetchToDos() {
-    try {
-        const response = await fetch(
-        "https://jsonplaceholder.typicode.com/todos"
-        );
-        const data = await response.json();
-        taskListArr = data.slice(10, 15);
-        renderList();
-        giveMessage("5 dummy ToDos added");
-    } catch (error) {
-        console.log(error);
-    }
-    }
+    
     //Pushing Task in the List inside DOM
     function addTaskToDOM(task) {
     const li = document.createElement("li");
@@ -52,8 +37,6 @@ var app = (function () {
     }
     // DELETE BUTTON
     function deleteTask(taskId) {
-      //here taskId will contain a string as it is being fetched from
-      //html element, where as task.id will be a number
     const newTasks = taskListArr.filter(function (task) {
         return task.id !== Number(taskId);
     });
@@ -68,8 +51,6 @@ var app = (function () {
     //CHECK BOX
     function markTaskAsComplete(taskId) {
     const currtask = taskListArr.filter(function (task) {
-        //here taskId will contain a string as it is being fetched from
-        //html element, where as task.id will be a number
         return task.id === Number(taskId);
     });
 
@@ -81,7 +62,6 @@ var app = (function () {
         giveMessage("You Completed Task " + currentTask.title);
         else
         giveMessage("Your Task " + currentTask.title + " is still incomplete");
-        renderList();
         return;
     } else {
         giveMessage("Marking as complete fail", "markTaskAsComplete");
@@ -100,7 +80,6 @@ var app = (function () {
         giveMessage("No task is currently present");
         return;
     }
-    console.log("sort called");
     if (sortingType == "name") {
         taskListArr.sort(sortAccToName);
     } else {
